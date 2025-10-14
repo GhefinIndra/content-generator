@@ -1,0 +1,126 @@
+╔════════════════════════════════════════════════════════════╗
+║                                                            ║
+║     💰 FINANCIAL CONTENT GENERATOR - QUICK GUIDE 📈       ║
+║                                                            ║
+╚════════════════════════════════════════════════════════════╝
+
+🎯 NEW STRATEGY: 1 Article = 1 Video (Focused Insights)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 RUN FULL WORKFLOW (ONE COMMAND):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+cd C:\infomedia\content-generator
+npm run workflow
+
+→ Scrapes ALL articles from Kontan today
+→ Filters by financial keywords (USD, Forex, Gold, etc.)
+→ Generates 1 video per matched article
+→ Sends to Project A
+→ Time: 15-30 minutes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 WHAT YOU GET:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From 100 articles scraped:
+  → ~40-50 matched financial articles
+  → 40-50 focused videos generated
+  → Each video: 300-800 words (1-3 minutes)
+  → Clean format (no **, no #, no emoji)
+  → Ready to stream!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎬 START STREAMING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After workflow completes:
+
+cd C:\infomedia\yt-stream-node
+npm start
+
+Open: http://localhost:3000/dashboard.html
+Click: "Start Auto-Loop"
+
+Done! Videos streaming automatically! 🚀
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🧪 TEST INDIVIDUAL STEPS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Test Scraper:
+   npm run test-scraper
+
+2. Test AI Generator:
+   npm run test-ai
+
+3. Test Send to Project A:
+   node test-send-to-project-a.js
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔑 KEYWORDS COVERED:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ USD/Forex: dolar, rupiah, kurs, nilai tukar
+✓ Fed/Policy: federal reserve, suku bunga, inflasi
+✓ Commodities: emas, minyak, komoditas
+✓ Stock: saham, ihsg, wall street, nasdaq
+✓ Crypto: bitcoin, ethereum, kripto
+✓ Economy: ekonomi, gdp, resesi, perdagangan
+✓ Banking: bank, bi, ojk, kredit
+✓ Investment: investasi, reksadana, obligasi
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 VIDEO STRUCTURE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Each video includes:
+  1. Hook (fakta mengejutkan)
+  2. Analisis (apa, mengapa, dampak)
+  3. Prediksi H+7 (3 skenario: best/likely/worst)
+  4. Actionable tips (3-5 tips praktis)
+  5. Closing (key takeaway)
+
+Format: CLEAN TEXT
+  ✓ No ** bold
+  ✓ No # hashtag in content
+  ✓ No emoji in content
+  ✓ Hashtag in metadata only
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏱️ TIMELINE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Phase 1: Scraping (5-10 min)
+  → 100 articles × 3s delay
+
+Phase 2: Filtering (<1 sec)
+  → Instant keyword matching
+
+Phase 3: AI Generation (10-15 min)
+  → 40 articles × 20s each
+
+Phase 4: Send to Project A (<10 sec)
+  → Fast database insert
+
+Total: 15-30 minutes 🎯
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 DOCUMENTATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Full guide: FINANCIAL-WORKFLOW-GUIDE.md
+Old workflow: README.md
+Quick start: QUICK-START.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ THAT'S IT! SIMPLE & POWERFUL! 💰📈

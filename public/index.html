@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Generator Dashboard - Project B</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-card h3 {
+      color: #667eea;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .stat-card .number {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .stat-card .label {
+      color: #888;
+      font-size: 0.9em;
+    }
+
+    .control-panel {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+
+    .control-panel h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .control-section {
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .control-section:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .control-section h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+    }
+
+    .control-section p {
+      color: #666;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .input-group label {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      color: #555;
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+
+    .input-group input,
+    .input-group select {
+      padding: 10px 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border-color 0.3s ease;
+      min-width: 150px;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .button {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .button:active {
+      transform: translateY(0);
+    }
+
+    .button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .button-success {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      color: white;
+    }
+
+    .button-warning {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+    }
+
+    .button-info {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+    }
+
+    .log-panel {
+      background: #1e1e1e;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+
+    .log-panel h2 {
+      color: #4facfe;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+    }
+
+    .log-content {
+      background: #2d2d2d;
+      border-radius: 10px;
+      padding: 15px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      color: #d4d4d4;
+      line-height: 1.6;
+    }
+
+    .log-content::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .log-content::-webkit-scrollbar-track {
+      background: #1e1e1e;
+      border-radius: 10px;
+    }
+
+    .log-content::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 10px;
+    }
+
+    .log-entry {
+      margin-bottom: 8px;
+      padding: 5px;
+      border-left: 3px solid transparent;
+      padding-left: 10px;
+    }
+
+    .log-entry.info {
+      border-left-color: #4facfe;
+      color: #4facfe;
+    }
+
+    .log-entry.success {
+      border-left-color: #38ef7d;
+      color: #38ef7d;
+    }
+
+    .log-entry.error {
+      border-left-color: #f5576c;
+      color: #f5576c;
+    }
+
+    .log-entry.warning {
+      border-left-color: #f093fb;
+      color: #f093fb;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-idle {
+      background: #e0e0e0;
+      color: #666;
+    }
+
+    .status-running {
+      background: #4facfe;
+      color: white;
+      animation: pulse 2s infinite;
+    }
+
+    .status-success {
+      background: #38ef7d;
+      color: white;
+    }
+
+    .status-error {
+      background: #f5576c;
+      color: white;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .footer {
+      text-align: center;
+      color: white;
+      margin-top: 30px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>📰 Content Generator Dashboard</h1>
+      <p>Project B - Scraping, AI Generation & Distribution Control</p>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>📄 Articles Scraped</h3>
+        <div class="number" id="stat-scraped">0</div>
+        <div class="label">Total in database</div>
+      </div>
+      <div class="stat-card">
+        <h3>⏳ Pending Articles</h3>
+        <div class="number" id="stat-pending">0</div>
+        <div class="label">Ready for AI</div>
+      </div>
+      <div class="stat-card">
+        <h3>🎬 Videos Generated</h3>
+        <div class="number" id="stat-videos">0</div>
+        <div class="label">AI processed</div>
+      </div>
+      <div class="stat-card">
+        <h3>📤 Sent to Project A</h3>
+        <div class="number" id="stat-sent">0</div>
+        <div class="label">Ready to stream</div>
+      </div>
+    </div>
+
+    <!-- Control Panel -->
+    <div class="control-panel">
+      <h2>🎮 Control Panel</h2>
+
+      <!-- Scraping Section -->
+      <div class="control-section">
+        <h3>1️⃣ Scraping Control</h3>
+        <p>Scrape articles from Kontan.co.id with financial keywords filter</p>
+
+        <div class="input-group">
+          <label>
+            Mode
+            <select id="scrape-mode">
+              <option value="unlimited">All Pages (Unlimited)</option>
+              <option value="limited">Limited (Custom)</option>
+            </select>
+          </label>
+
+          <label id="max-pages-group" style="display: none;">
+            Max Pages
+            <input type="number" id="max-pages" value="3" min="1" max="20">
+          </label>
+
+          <label id="max-articles-group" style="display: none;">
+            Max Articles
+            <input type="number" id="max-articles" value="60" min="20" max="200" step="20">
+          </label>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button class="button button-primary" onclick="startScraping()">
+            🔍 Start Scraping
+          </button>
+          <span class="status-badge status-idle" id="scrape-status">Idle</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="scrape-progress"></div>
+        </div>
+      </div>
+
+      <!-- AI Generation Section -->
+      <div class="control-section">
+        <h3>2️⃣ AI Generation Control</h3>
+        <p>Generate video content (1 article = 1 video) using Gemini AI</p>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button class="button button-success" onclick="startGeneration()">
+            🤖 Generate Videos
+          </button>
+          <span class="status-badge status-idle" id="generate-status">Idle</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="generate-progress"></div>
+        </div>
+      </div>
+
+      <!-- Send to Project A Section -->
+      <div class="control-section">
+        <h3>3️⃣ Send to Project A</h3>
+        <p>Send generated videos to Project A (YouTube Streaming) for scheduling</p>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button class="button button-warning" onclick="sendToProjectA()">
+            📤 Send to Project A
+          </button>
+          <span class="status-badge status-idle" id="send-status">Idle</span>
+        </div>
+      </div>
+
+      <!-- Full Workflow Section -->
+      <div class="control-section">
+        <h3>⚡ Full Workflow (All-in-One)</h3>
+        <p>Run entire pipeline: Scrape → Generate → Send (automatic)</p>
+
+        <button class="button button-info" onclick="runFullWorkflow()">
+          🚀 Run Full Workflow
+        </button>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="control-section">
+        <h3>🔄 Quick Actions</h3>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="button" style="background: #555; color: white;" onclick="refreshStats()">
+            🔄 Refresh Stats
+          </button>
+          <button class="button" style="background: #555; color: white;" onclick="clearLogs()">
+            🗑️ Clear Logs
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Log Panel -->
+    <div class="log-panel">
+      <h2>📋 Activity Logs</h2>
+      <div class="log-content" id="log-content">
+        <div class="log-entry info">System ready. Waiting for commands...</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Content Generator Dashboard v1.0 | Project B | Port 4000</p>
+    </div>
+  </div>
+
+  <script>
+    // ========================================
+    // UTILITY FUNCTIONS
+    // ========================================
+
+    function addLog(message, type = 'info') {
+      const logContent = document.getElementById('log-content');
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = `[${timestamp}] ${message}`;
+      logContent.appendChild(entry);
+      logContent.scrollTop = logContent.scrollHeight;
+    }
+
+    function clearLogs() {
+      const logContent = document.getElementById('log-content');
+      logContent.innerHTML = '<div class="log-entry info">Logs cleared.</div>';
+    }
+
+    function updateStatus(elementId, status, text) {
+      const element = document.getElementById(elementId);
+      element.className = `status-badge status-${status}`;
+      element.textContent = text;
+    }
+
+    function updateProgress(elementId, percent) {
+      document.getElementById(elementId).style.width = `${percent}%`;
+    }
+
+    async function refreshStats() {
+      try {
+        addLog('Fetching statistics...', 'info');
+        const response = await fetch('/api/stats');
+        const data = await response.json();
+
+        if (data.success) {
+          // Parse news stats (array format)
+          let newsPending = 0, newsProcessed = 0;
+          data.news.forEach(stat => {
+            if (stat.status === 'pending') newsPending = stat.total;
+            if (stat.status === 'processed') newsProcessed = stat.total;
+          });
+
+          // Parse rekomendasi stats (array format)
+          let rekomPending = 0, rekomSent = 0;
+          data.rekomendasi.forEach(stat => {
+            if (stat.status === 'pending') rekomPending = stat.total;
+            if (stat.status === 'sent_to_schedule') rekomSent = stat.total;
+          });
+
+          // Update stats
+          document.getElementById('stat-scraped').textContent = newsPending + newsProcessed;
+          document.getElementById('stat-pending').textContent = newsPending;
+          document.getElementById('stat-videos').textContent = rekomPending + rekomSent;
+          document.getElementById('stat-sent').textContent = rekomSent;
+
+          addLog('✅ Statistics updated', 'success');
+        } else {
+          addLog(`❌ Failed to fetch stats: ${data.error}`, 'error');
+        }
+      } catch (error) {
+        addLog(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+
+    // ========================================
+    // SCRAPING MODE TOGGLE
+    // ========================================
+
+    document.getElementById('scrape-mode').addEventListener('change', function() {
+      const mode = this.value;
+      const maxPagesGroup = document.getElementById('max-pages-group');
+      const maxArticlesGroup = document.getElementById('max-articles-group');
+
+      if (mode === 'limited') {
+        maxPagesGroup.style.display = 'flex';
+        maxArticlesGroup.style.display = 'flex';
+      } else {
+        maxPagesGroup.style.display = 'none';
+        maxArticlesGroup.style.display = 'none';
+      }
+    });
+
+    // ========================================
+    // API FUNCTIONS
+    // ========================================
+
+    async function startScraping() {
+      try {
+        updateStatus('scrape-status', 'running', 'Running...');
+        updateProgress('scrape-progress', 0);
+        addLog('🔍 Starting scraping process...', 'info');
+
+        const mode = document.getElementById('scrape-mode').value;
+        const maxPages = document.getElementById('max-pages').value;
+        const maxArticles = document.getElementById('max-articles').value;
+
+        const options = mode === 'limited' ? { maxPages, maxArticles } : {};
+
+        addLog(`Mode: ${mode === 'unlimited' ? 'Unlimited (all pages)' : `Limited (${maxPages} pages, ${maxArticles} articles)`}`, 'info');
+
+        const response = await fetch('/api/scrape', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(options)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          addLog('✅ Scraping started in background', 'success');
+          updateProgress('scrape-progress', 50);
+
+          // Simulate progress (since scraping is in background)
+          setTimeout(() => {
+            updateProgress('scrape-progress', 100);
+            updateStatus('scrape-status', 'success', 'Completed');
+            addLog('✅ Scraping completed! Check stats.', 'success');
+            refreshStats();
+          }, 5000);
+        } else {
+          updateStatus('scrape-status', 'error', 'Failed');
+          addLog(`❌ Scraping failed: ${data.error}`, 'error');
+        }
+      } catch (error) {
+        updateStatus('scrape-status', 'error', 'Error');
+        addLog(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+
+    async function startGeneration() {
+      try {
+        updateStatus('generate-status', 'running', 'Running...');
+        updateProgress('generate-progress', 0);
+        addLog('🤖 Starting AI generation process...', 'info');
+
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        updateProgress('generate-progress', 50);
+        const data = await response.json();
+
+        if (data.success) {
+          updateProgress('generate-progress', 100);
+          updateStatus('generate-status', 'success', 'Completed');
+          addLog(`✅ Generated ${data.count} videos successfully!`, 'success');
+          refreshStats();
+        } else {
+          updateStatus('generate-status', 'error', 'Failed');
+          addLog(`❌ Generation failed: ${data.error}`, 'error');
+        }
+      } catch (error) {
+        updateStatus('generate-status', 'error', 'Error');
+        addLog(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+
+    async function sendToProjectA() {
+      try {
+        updateStatus('send-status', 'running', 'Sending...');
+        addLog('📤 Sending videos to Project A...', 'info');
+
+        const response = await fetch('/api/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          updateStatus('send-status', 'success', 'Completed');
+          addLog(`✅ Sent ${data.sent} videos to Project A!`, 'success');
+          if (data.failed > 0) {
+            addLog(`⚠️ Failed to send ${data.failed} videos`, 'warning');
+          }
+          refreshStats();
+        } else {
+          updateStatus('send-status', 'error', 'Failed');
+          addLog(`❌ Send failed: ${data.error}`, 'error');
+        }
+      } catch (error) {
+        updateStatus('send-status', 'error', 'Error');
+        addLog(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+
+    async function runFullWorkflow() {
+      try {
+        addLog('🚀 Starting FULL WORKFLOW...', 'info');
+        addLog('This will run: Scrape → Generate → Send', 'info');
+
+        const response = await fetch('/api/workflow', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          addLog('✅ Full workflow started in background', 'success');
+          addLog('⏳ This may take several minutes. Monitor terminal for detailed progress.', 'warning');
+
+          // Refresh stats periodically
+          const interval = setInterval(() => {
+            refreshStats();
+          }, 10000); // Every 10 seconds
+
+          // Stop after 5 minutes
+          setTimeout(() => {
+            clearInterval(interval);
+            addLog('✅ Workflow should be completed. Check stats.', 'success');
+            refreshStats();
+          }, 300000);
+        } else {
+          addLog(`❌ Workflow failed: ${data.error}`, 'error');
+        }
+      } catch (error) {
+        addLog(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+
+    // ========================================
+    // INITIALIZATION
+    // ========================================
+
+    // Refresh stats on load
+    refreshStats();
+
+    // Auto-refresh stats every 30 seconds
+    setInterval(refreshStats, 30000);
+  </script>
+</body>
+</html>

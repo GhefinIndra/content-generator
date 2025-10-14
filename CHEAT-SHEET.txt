@@ -1,0 +1,158 @@
+╔════════════════════════════════════════════════════════════╗
+║         📰 PROJECT B - CHEAT SHEET 🤖                     ║
+╚════════════════════════════════════════════════════════════╝
+
+🚀 CARA PALING CEPAT RUN:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+cd C:\infomedia\content-generator
+node run-workflow.js
+
+→ Ini langsung scrape + AI + kirim ke Project A
+→ Waktu: ~3-5 menit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+📝 COMMAND REFERENCE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Scrape Artikel Baru (5 artikel):
+   node test-scraper-limited.js
+
+2. Generate AI Content:
+   node test-ai-generator.js
+
+3. Kirim ke Project A:
+   node test-send-to-project-a.js
+
+4. Full Workflow (semua step):
+   node run-workflow.js
+
+5. Start API Server:
+   npm start
+
+6. Cek Statistik:
+   curl http://localhost:4000/api/stats
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+📂 FILE PENTING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+.env                    → Config (API key, DB, dll)
+db.js                   → Database functions
+scraper.js              → Web scraping logic
+ai-generator.js         → AI content generation
+scheduler.js            → Integration Project A
+server.js               → API server
+run-workflow.js         → Main workflow ⭐
+
+README.md               → Full documentation
+QUICK-START.md          → Quick guide
+SUMMARY.md              → What's been built
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🔄 DAILY WORKFLOW:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Pagi (sekali sehari):
+1. cd C:\infomedia\content-generator
+2. node run-workflow.js
+3. Tunggu 3-5 menit
+4. cd C:\infomedia\yt-stream-node
+5. npm start
+6. Buka http://localhost:3000/dashboard.html
+7. Klik "Start Auto-Loop"
+8. Done! 🎉
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🗄️ DATABASE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Database: content_generator
+
+Table: news
+  → Artikel hasil scraping
+  → Status: pending/processed/error
+
+Table: rekomendasi
+  → Video hasil AI generation
+  → Status: pending/sent_to_schedule
+
+Cek di phpMyAdmin: https://ai.umkdigital.id/phpmyadmin
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🆘 TROUBLESHOOTING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problem: No pending articles
+Fix: node test-scraper-limited.js
+
+Problem: AI generation timeout
+Fix: Tunggu 1-2 menit lagi, atau kurangi artikel
+
+Problem: Database error
+Fix: Cek internet, cek .env credentials
+
+Problem: Scraper tidak dapat artikel
+Fix: Cek Kontan.co.id bisa dibuka di browser
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🎯 EXPECTED OUTPUT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Input:  5-10 artikel dari Kontan.co.id
+Output: 3-5 video (500-700 kata each)
+Time:   3-5 menit
+Result: Ready untuk YouTube Live streaming
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+🌐 API ENDPOINTS (Port 4000):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GET  /api/stats          → Statistik
+POST /api/scrape         → Trigger scraping
+POST /api/generate       → Trigger AI
+POST /api/send           → Kirim ke Project A
+POST /api/workflow       → Full workflow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+✅ SYSTEM CHECK:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[✓] Database: content_generator created
+[✓] Tables: news, rekomendasi created
+[✓] Gemini API: Working (tested)
+[✓] Scraper: Working (5 articles tested)
+[✓] AI Generator: Working (3 videos tested)
+[✓] Integration: Ready (Project A connection)
+[✓] Documentation: Complete
+
+STATUS: 🟢 PRODUCTION READY!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+📞 HELP:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Baca dokumentasi lengkap:
+- README.md          → Full docs
+- QUICK-START.md     → Quick guide
+- SUMMARY.md         → What's been built
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 SELAMAT! PROJECT B SIAP DIPAKAI! 🚀
