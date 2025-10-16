@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
-import { insertNews } from './db.js';
+import { insertNews, checkArticleExists } from './db.js';
+import { toJakartaDateTime } from './utils.js';
 
 /**
  * ENHANCED: Scrape semua artikel hari ini dengan smart delays
@@ -88,6 +89,13 @@ export async function scrapeKontanToday() {
         try {
           console.log(`   [${i + 1}/${articles.length}] 📰 ${article.judul}`);
 
+          // Check if article already exists - SKIP if exists
+          const exists = await checkArticleExists(article.uri);
+          if (exists) {
+            console.log(`      ⏭️  Already exists, skipped`);
+            continue;
+          }
+
           const contentPage = await browser.newPage();
           await contentPage.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
 
@@ -139,11 +147,14 @@ export async function scrapeKontanToday() {
           await contentPage.close();
 
           if (content && content.length > 200) {
+            // Use Jakarta timezone (GMT+7)
+            const tanggalBerita = toJakartaDateTime(date);
+
             await insertNews({
               uri: article.uri,
               judul: article.judul,
               isi_berita: content,
-              tanggal_berita: date.toISOString().slice(0, 19).replace('T', ' ')
+              tanggal_berita: tanggalBerita
             });
 
             totalArticles++;

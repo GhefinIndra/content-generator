@@ -1,5 +1,6 @@
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
+import { getJakartaDateTime } from './utils.js';
 
 dotenv.config();
 
@@ -30,6 +31,22 @@ const poolProjectA = mysql.createPool({
 // ========================================
 // NEWS TABLE OPERATIONS
 // ========================================
+
+/**
+ * Check if article URI already exists
+ */
+export async function checkArticleExists(uri) {
+  try {
+    const [rows] = await poolProjectB.execute(
+      `SELECT id FROM news WHERE uri = ? LIMIT 1`,
+      [uri]
+    );
+    return rows.length > 0;
+  } catch (error) {
+    console.error('❌ Error checking article exists:', error.message);
+    throw error;
+  }
+}
 
 /**
  * Insert artikel ke tabel news
@@ -68,16 +85,52 @@ export async function getPendingNews() {
 }
 
 /**
+ * Get artikel yang belum punya teks generated (pending dan belum ada di rekomendasi)
+ * Ini mencegah duplikasi saat generate teks video
+ */
+export async function getNewsWithoutVideo() {
+  try {
+    // Ambil artikel pending
+    const [allNews] = await poolProjectB.execute(
+      `SELECT * FROM news WHERE status = 'pending' ORDER BY tanggal_berita DESC`
+    );
+
+    // Ambil semua source_news_ids dari rekomendasi
+    const [rekomendasi] = await poolProjectB.execute(
+      `SELECT source_news_ids FROM rekomendasi`
+    );
+
+    // Bikin set dari news IDs yang sudah punya rekomendasi
+    const processedNewsIds = new Set();
+    rekomendasi.forEach(r => {
+      if (r.source_news_ids) {
+        const ids = r.source_news_ids.split(',').map(id => parseInt(id.trim()));
+        ids.forEach(id => processedNewsIds.add(id));
+      }
+    });
+
+    // Filter artikel yang belum ada di rekomendasi
+    const unprocessedNews = allNews.filter(article => !processedNewsIds.has(article.id));
+
+    return unprocessedNews;
+  } catch (error) {
+    console.error('❌ Error getting news without video:', error.message);
+    throw error;
+  }
+}
+
+/**
  * Update status artikel menjadi processed
  */
 export async function markNewsAsProcessed(newsIds) {
   try {
     const placeholders = newsIds.map(() => '?').join(',');
+    const tanggalProses = getJakartaDateTime();
     const [result] = await poolProjectB.execute(
       `UPDATE news
-       SET status = 'processed', tanggal_proses = NOW()
+       SET status = 'processed', tanggal_proses = ?
        WHERE id IN (${placeholders})`,
-      newsIds
+      [tanggalProses, ...newsIds]
     );
     return result.affectedRows;
   } catch (error) {
@@ -149,9 +202,8 @@ export async function markRekomendasiAsSent(rekomendasiId, scheduleId) {
  */
 export async function insertScheduleToProjectA(data) {
   try {
-    // Convert date to MySQL format
-    const now = new Date();
-    const tanggalCreate = now.toISOString().slice(0, 19).replace('T', ' ');
+    // Use Jakarta timezone (GMT+7)
+    const tanggalCreate = getJakartaDateTime();
 
     const [result] = await poolProjectA.execute(
       `INSERT INTO schedules (judul, hashtag, deskripsi, konten, tanggal_create, status)

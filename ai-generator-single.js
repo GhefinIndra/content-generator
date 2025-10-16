@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
-import { getPendingNews, markNewsAsProcessed, insertRekomendasi } from './db.js';
+import { getNewsWithoutVideo, markNewsAsProcessed, insertRekomendasi } from './db.js';
 import { filterFinancialArticles, getFilterStats } from './keyword-filter.js';
 
 dotenv.config();
@@ -10,19 +10,20 @@ const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL });
 
 /**
  * NEW: Generate 1 video per article (filtered by financial keywords)
+ * SKIP articles yang sudah punya video untuk prevent duplicate
  */
 export async function generateSingleVideoPerArticle() {
   console.log('🤖 Starting AI Content Generation (1 Article = 1 Video)...\n');
 
-  // Get pending news
-  const allArticles = await getPendingNews();
+  // Get articles yang BELUM punya video (prevent duplicate)
+  const allArticles = await getNewsWithoutVideo();
 
   if (allArticles.length === 0) {
-    console.log('⚠️  No pending articles to process');
+    console.log('⚠️  No new articles to process (all articles already have videos)');
     return [];
   }
 
-  console.log(`📰 Found ${allArticles.length} pending articles\n`);
+  console.log(`📰 Found ${allArticles.length} articles without videos\n`);
 
   // Filter by financial keywords
   console.log('🔍 Filtering by financial keywords...');

@@ -129,9 +129,8 @@ app.post('/api/send', async (req, res) => {
     console.log('\n📡 API: Send to Project A request received');
 
     // Use the new send function
-    const { sendToProjectA: sendVideos } = await import('./send-to-project-a.js');
-
-    const result = await sendVideos();
+    
+    const result = await sendToProjectA();
 
     res.json({
       success: true,
